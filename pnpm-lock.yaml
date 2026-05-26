@@ -24,8 +24,8 @@ importers:
         specifier: ^12.0.0
         version: 12.1.0
       diagnost-core:
-        specifier: workspace:*
-        version: link:../core
+        specifier: ^0.1.0
+        version: 0.1.2
       effect:
         specifier: ^4.0.0-beta.70
         version: 4.0.0-beta.70
@@ -53,8 +53,8 @@ importers:
   packages/eslint-plugin-astro-doctor:
     dependencies:
       diagnost-core:
-        specifier: workspace:*
-        version: link:../core
+        specifier: ^0.1.0
+        version: 0.1.2
       eslint:
         specifier: '>=8.0.0'
         version: 10.4.0
@@ -546,6 +546,9 @@ packages:
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
+
+  diagnost-core@0.1.2:
+    resolution: {integrity: sha512-k4vGayS3OvJZmvP3hwLLCxnbQ1E7D2/ahybLOcViHbcJvg56vMLDgzxuDKe6tlZ2l3GiuQVMfRqQxsB0lI3VHw==}
 
   effect@4.0.0-beta.70:
     resolution: {integrity: sha512-8AwGTRiNriirHGEYHrOS0E9fzdhIqCdZjiHP1YXmNo2UyPGS43ILsymsSHT7V0DJS+8dvlKq2RxnrDBUhDNZHg==}
@@ -1298,6 +1301,11 @@ snapshots:
 
   detect-libc@2.1.2:
     optional: true
+
+  diagnost-core@0.1.2:
+    dependencies:
+      effect: 4.0.0-beta.70
+      picomatch: 4.0.4
 
   effect@4.0.0-beta.70:
     dependencies:

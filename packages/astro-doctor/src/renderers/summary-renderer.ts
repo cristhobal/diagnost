@@ -45,7 +45,6 @@ export function renderSummary(
   const errorCount = diagnostics.filter(d => d.severity === "error").length
   const warnCount = diagnostics.filter(d => d.severity === "warn").length
   const infoCount = diagnostics.filter(d => d.severity === "info").length
-
   const projectName = NodePath.basename(result.projectInfo.rootDir)
 
   if (result.score) {
@@ -61,7 +60,7 @@ export function renderSummary(
     const bar = renderScoreBar(score)
 
     const faceLines = [coloredFace, coloredEyes, coloredMouth, coloredBottom]
-    const rightLines = [scoreLine, bar, `Diagnost (https://diagnost.dev)`, ""]
+    const rightLines = [scoreLine, bar, `Diagnost (https://usediagnost.vercel.app)`, ""]
 
     const maxFaceWidth = 7
     for (let i = 0; i < 4; i++) {
@@ -72,19 +71,15 @@ export function renderSummary(
     }
   }
 
-  const parts: string[] = []
-  if (errorCount > 0) parts.push(`${RED}${errorCount} error${errorCount !== 1 ? "s" : ""}${RESET}`)
-  if (warnCount > 0) parts.push(`${YELLOW}${warnCount} warning${warnCount !== 1 ? "s" : ""}${RESET}`)
-  if (infoCount > 0) parts.push(`${CYAN}${infoCount} info${RESET}`)
-  if (parts.length === 0) {
-    console.log(`  ${GREEN}\u2714 No issues found${RESET}`)
+  const total = errorCount + warnCount + infoCount
+  if (total > 0) {
+    const color = errorCount > 0 ? RED : warnCount > 0 ? YELLOW : GRAY
+    console.log(`  ${color}${total} ${total === 1 ? "issue" : "issues"}${RESET}`)
   } else {
-    console.log(`  ${parts.join(", ")}  ${DIM}| ${diagnostics.length} total${RESET}`)
+    console.log(`  ${GREEN}No issues found${RESET}`)
   }
 
-  console.log(
-    `  ${GRAY}Scanned: ${result.projectInfo.sourceFileCount} files in ${(result.duration / 1000).toFixed(1)}s${RESET}`,
-  )
+  console.log(`  ${GRAY}Scanned: ${result.projectInfo.sourceFileCount} files in ${(result.duration / 1000).toFixed(1)}s${RESET}`)
   console.log()
 }
 

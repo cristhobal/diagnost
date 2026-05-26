@@ -4,6 +4,7 @@ import type { Diagnostic } from "diagnost-core"
 import { renderCLI } from "../renderers/cli-renderer.js"
 import { renderJSON } from "../renderers/json-renderer.js"
 import { renderSummary } from "../renderers/summary-renderer.js"
+import { runFixEngine } from "../fix/fix-engine.js"
 
 interface InspectCommandOptions {
   lint?: boolean
@@ -14,6 +15,7 @@ interface InspectCommandOptions {
   failOn?: string
   score?: boolean
   verbose?: boolean
+  fix?: boolean
 }
 
 export async function inspectAction(
@@ -39,8 +41,13 @@ export async function inspectAction(
   if (options.json || options.jsonCompact) {
     renderJSON(diagnostics, result, { compact: options.jsonCompact || false })
   } else {
-    renderCLI(diagnostics, result)
+    const verbose = options.verbose || false
+    renderCLI(diagnostics, result, { verbose })
     renderSummary(diagnostics, result)
+  }
+
+  if (options.fix && !options.json && !options.jsonCompact) {
+    await runFixEngine(diagnostics, resolvedDir)
   }
 
   const failLevel = options.failOn || "warn"

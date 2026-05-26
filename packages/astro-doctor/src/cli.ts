@@ -40,6 +40,7 @@ export function runDoctor(): void {
     .option("--score", "Calculate health score (default: true)")
     .option("--no-score", "Skip health score")
     .option("--verbose", "Show detailed output")
+    .option("--fix", "Automatically fix fixable issues")
     .action((directory, options) => {
       inspectAction(directory, options)
     })

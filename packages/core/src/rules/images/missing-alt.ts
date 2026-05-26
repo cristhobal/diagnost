@@ -10,11 +10,11 @@ export default defineRule({
     if (!filePath.endsWith(".astro") && !filePath.endsWith(".tsx") && !filePath.endsWith(".jsx")) {
       return
     }
-    const imgRegex = /<img\s[^>]*\/?>/g
+    const imgRegex = /<img\s[\s\S]*?\/?>/g
     let match
     while ((match = imgRegex.exec(content)) !== null) {
       const tag = match[0]
-      const hasAlt = /alt\s*=\s*["']/i.test(tag)
+      const hasAlt = /\balt\s*=\s*(?:"|'|\{)/i.test(tag)
       const isAriaHidden = /aria-hidden\s*=\s*["']true["']/i.test(tag)
       const isRolePresentation = /role\s*=\s*["']presentation["']/i.test(tag)
 

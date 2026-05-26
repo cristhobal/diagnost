@@ -86,7 +86,7 @@ diagnost install
 
   ┌─────┐   72 / 100  Good · my-project
   │ ◠ ◠ │   ████████████████████████████████████░░░░░░░░░░░░
-  │  ◡  │   Diagnost (https://diagnost.dev)
+  │  ◡  │   Diagnost (https://usediagnost.vercel.app)
   └─────┘
 
   2 errors, 1 warning  | 3 total
