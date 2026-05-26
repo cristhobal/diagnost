@@ -1,0 +1,19 @@
+{
+  "name": "eslint-plugin-diagnost",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "diagnost-core": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  },
+  "peerDependencies": {
+    "eslint": ">=8.0.0"
+  }
+}
