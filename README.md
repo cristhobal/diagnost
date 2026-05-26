@@ -3,95 +3,101 @@
   <img alt="diagnost" src="https://img.shields.io/badge/diagnost-Astro%20Diagnostic%20Tool-ff5a03?style=for-the-badge&logo=astro&logoColor=white&labelColor=1e1e1e">
 </picture>
 
+<div align="center">
+
+[English](README.md) · [中文](docs/zh.md) · [हिन्दी](docs/hi.md) · [Español](docs/es.md) · [Français](docs/fr.md)
+
 ---
 
-**diagnost** es un conjunto de herramientas de diagnóstico y linting para proyectos [Astro](https://astro.build). Analiza tu proyecto, ejecuta más de 20 reglas de linting agrupadas en 11 categorías, calcula una puntuación de salud y te ayuda a mantener las mejores prácticas en SEO, accesibilidad, rendimiento, seguridad y más.
+</div>
 
-## Paquetes
+**diagnost** is a diagnostic and linting toolkit for [Astro](https://astro.build) projects. It scans your project, runs 20+ lint rules across 11 categories, calculates a health score, and helps you maintain best practices in SEO, accessibility, performance, security, and more.
 
-| Paquete | Publicado | Descripción |
+## Packages
+
+| Package | Published | Description |
 |---|---|---|
-| `diagnost-core` | [npm](https://www.npmjs.com/package/diagnost-core) | Motor de diagnóstico: detección de proyectos, reglas de linting, pipeline de filtros y cálculo de puntuación |
-| `diagnost` | [npm](https://www.npmjs.com/package/diagnost) | CLI para escanear proyectos Astro desde la terminal |
-| `eslint-plugin-diagnost` | [npm](https://www.npmjs.com/package/eslint-plugin-diagnost) | Plugin ESLint que expone las reglas como reglas de ESLint |
+| `diagnost-core` | [npm](https://www.npmjs.com/package/diagnost-core) | Diagnostic engine: project discovery, lint rules, filter pipeline, and score calculation |
+| `diagnost` | [npm](https://www.npmjs.com/package/diagnost) | CLI to scan Astro projects from the terminal |
+| `eslint-plugin-diagnost` | [npm](https://www.npmjs.com/package/eslint-plugin-diagnost) | ESLint plugin exposing rules as ESLint rules |
 
-## Características
+## Features
 
-- **21+ reglas de linting** en 11 categorías: SEO, accesibilidad, rendimiento, seguridad, content collections, view transitions, routing, imágenes, islands, i18n y configuración
-- **Puntuación de salud** (0–100) con cálculo local o mediante API remota con fallback
-- **Filtrado por superficie** — distintas configuraciones de reglas para CLI, PR comments, CI, etc.
-- **Integración con Git** — análisis solo de archivos staged (pre-commit) o diff contra una rama base (CI)
-- **Configurable** — archivo `.diagnost.json` con overrides de reglas, categorías e ignores
-- **Múltiples formatos de salida** — CLI coloreado, JSON y JSON compacto
-- **Plugin ESLint** — metadatos de reglas y presets para integración con IDE
-- **Streaming concurrente** — linting de archivos en paralelo mediante Effect Stream
-- **Modo fail-on** — exit code 1 si se supera un umbral de severidad (ideal para CI)
+- **20+ lint rules** across 11 categories: SEO, accessibility, performance, security, content collections, view transitions, routing, images, islands, i18n, and configuration
+- **Health score** (0–100) with local calculation or remote API with fallback
+- **Surface-based filtering** — different rule configurations for CLI, PR comments, CI, etc.
+- **Git integration** — scan only staged files (pre-commit) or diff against a base branch (CI)
+- **Configurable** — `.diagnost.json` config file with rule/category overrides and ignore patterns
+- **Multiple output formats** — colorized CLI, JSON, and compact JSON
+- **ESLint plugin** — rule metadata and config presets for IDE integration
+- **Concurrent streaming** — parallel file linting via Effect Stream
+- **Fail-on mode** — exit code 1 if severity threshold is exceeded (CI-friendly)
 
-## Instalación
+## Installation
 
 ```bash
-# CLI global
+# Global CLI
 npm install -g diagnost
 
-# O usando npx
+# Or using npx
 npx diagnost .
 
-# Como dependencia de proyecto
+# As a project dependency
 npm install --save-dev diagnost-core
 ```
 
-### Requisitos
+### Requirements
 
 - Node.js >= 18
-- pnpm >= 9.1 (para desarrollo)
+- pnpm >= 9.1 (for development)
 
-## Uso
+## Usage
 
 ### CLI
 
 ```bash
-# Escanear el directorio actual
+# Scan the current directory
 diagnost
 
-# Escanear un directorio específico
-diagnost ./ruta/al/proyecto
+# Scan a specific directory
+diagnost ./path/to/project
 
-# Salida JSON
+# JSON output
 diagnost . --json
 
-# Solo archivos modificados desde main (CI)
+# Only files changed since main (CI)
 diagnost . --diff main
 
-# Solo archivos staged (pre-commit)
+# Only staged files (pre-commit)
 diagnost . --staged
 
-# Fallar si hay errores
+# Fail on errors
 diagnost . --fail-on error
 
-# Mostrar sugerencias de fix y enlaces a documentación
+# Show fix suggestions and docs links
 diagnost . --verbose
 
-# Instalar skill para asistentes AI (Claude Code, OpenCode)
+# Install skill for AI assistants (Claude Code, OpenCode)
 diagnost install
 ```
 
-### Como librería
+### As a library
 
 ```typescript
 import { runInspect } from "diagnost-core"
 import * as Effect from "effect/Effect"
 
 const result = await Effect.runPromise(
-  runInspect({ rootDir: "/ruta/al/proyecto" })
+  runInspect({ rootDir: "/path/to/project" })
 )
 
 console.log(result.diagnostics)
-console.log(`Puntuación: ${result.score}`)
+console.log(`Score: ${result.score}`)
 ```
 
-### Plugin ESLint
+### ESLint plugin
 
-En tu `.eslintrc`:
+In your `.eslintrc`:
 
 ```json
 {
@@ -100,9 +106,9 @@ En tu `.eslintrc`:
 }
 ```
 
-## Reglas
+## Rules
 
-| Categoría | Reglas |
+| Category | Rules |
 |---|---|
 | **a11y** | `missing-lang`, `invalid-aria` |
 | **config** | `missing-config`, `outdated-integration` |
@@ -116,9 +122,9 @@ En tu `.eslintrc`:
 | **seo** | `missing-head`, `missing-title`, `missing-meta-description` |
 | **view-transitions** | `missing-view-transition`, `missing-animation` |
 
-## Configuración
+## Configuration
 
-Crea un archivo `.diagnost.json` en la raíz del proyecto:
+Create a `.diagnost.json` file in your project root:
 
 ```json
 {
@@ -138,25 +144,25 @@ Crea un archivo `.diagnost.json` en la raíz del proyecto:
 }
 ```
 
-## Desarrollo
+## Development
 
 ```bash
-# Instalar dependencias
+# Install dependencies
 pnpm install
 
-# Compilar todos los paquetes
+# Build all packages
 pnpm build
 
 # Typecheck
 pnpm typecheck
 
-# Ejecutar tests
+# Run tests
 pnpm test
 
-# Limpiar builds
+# Clean builds
 pnpm clean
 ```
 
-## Licencia
+## License
 
 MIT
