@@ -11,6 +11,9 @@
     "dist",
     "bin"
   ],
+  "scripts": {
+    "postpublish": "node scripts/vercel-deploy.mjs"
+  },
   "dependencies": {
     "diagnost-core": "^0.1.4",
     "commander": "^12.0.0",
