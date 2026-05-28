@@ -53,16 +53,20 @@ export function runInspect(options: InspectOptions): Effect.Effect<InspectResult
 
     progress.succeed(`Found Astro ${projectInfo.astroVersion} — ${projectInfo.integrations.length} integrations`)
 
+    let restrictToFiles: string[] | undefined
+
     if (options.staged) {
       progress.start("Analyzing staged files...")
-      yield* getStagedFiles(options.rootDir).pipe(Effect.orElseSucceed(() => []))
-      progress.succeed("Staged files check complete")
+      const staged = yield* getStagedFiles(options.rootDir).pipe(Effect.orElseSucceed(() => []))
+      restrictToFiles = [...(restrictToFiles ?? []), ...staged]
+      progress.succeed(`Found ${staged.length} staged file${staged.length === 1 ? "" : "s"}`)
     }
 
     if (options.diff) {
       progress.start(`Analyzing diff against ${options.diff}...`)
-      yield* getDiffFiles(options.rootDir, options.diff).pipe(Effect.orElseSucceed(() => []))
-      progress.succeed("Diff analysis complete")
+      const changed = yield* getDiffFiles(options.rootDir, options.diff).pipe(Effect.orElseSucceed(() => []))
+      restrictToFiles = [...(restrictToFiles ?? []), ...changed]
+      progress.succeed(`Found ${changed.length} changed file${changed.length === 1 ? "" : "s"}`)
     }
 
     const allDiagnostics: Diagnostic[] = []
@@ -70,7 +74,7 @@ export function runInspect(options: InspectOptions): Effect.Effect<InspectResult
     if (options.lint !== false) {
       progress.start("Running Astro lint rules...")
 
-      const diagnosticStream = runLint(options.rootDir, projectInfo, options.ruleOverrides)
+      const diagnosticStream = runLint(options.rootDir, projectInfo, options.ruleOverrides, restrictToFiles)
       const pipeline = buildDiagnosticPipeline(configShape.config)
       const reporter = createReporter()
 

@@ -1,19 +1,23 @@
+import picomatch from "picomatch"
 import type { AstroDoctorConfig, Diagnostic, SurfaceName, SurfaceConfig } from "./types/index.js"
+
+const GLOB_CHARS = /[*?[\]{}!()]/
 
 export function buildDiagnosticPipeline(config: AstroDoctorConfig) {
   const ignorePatterns = config.ignore || []
   const ruleSeverities = config.rules || {}
   const categorySeverities = config.categories || {}
 
+  const ignoreMatchers = ignorePatterns.map((pattern): ((filePath: string) => boolean) => {
+    if (GLOB_CHARS.test(pattern)) {
+      const isMatch = picomatch([pattern, `**/${pattern}`], { dot: true })
+      return (filePath) => isMatch(filePath.replace(/\\/g, "/"))
+    }
+    return (filePath) => filePath.includes(pattern)
+  })
+
   function isIgnored(filePath: string): boolean {
-    if (ignorePatterns.length === 0) return false
-    return ignorePatterns.some(pattern => {
-      if (pattern.includes("*")) {
-        const escaped = pattern.replace(/\./g, "\\.").replace(/\*/g, ".*")
-        return new RegExp(escaped).test(filePath)
-      }
-      return filePath.includes(pattern)
-    })
+    return ignoreMatchers.some(matches => matches(filePath))
   }
 
   function apply(diagnostic: Diagnostic, surface: SurfaceName): Diagnostic | null {

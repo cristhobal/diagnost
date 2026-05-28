@@ -12,41 +12,44 @@ export function runLint(
   rootDir: string,
   projectInfo: ProjectInfo,
   ruleOverrides?: Record<string, "off" | "warn" | "error">,
+  restrictToFiles?: string[],
 ): Stream.Stream<Diagnostic, LintExecutionError> {
-  return Stream.fromEffect(listFilesRecursive(rootDir, [...ASTRO_SOURCE_EXTENSIONS])).pipe(
-    Stream.flatMap((files) => {
-      const astroFiles = files.filter((f: string) => f.endsWith(".astro"))
-      const tsFiles = files.filter((f: string) => f.endsWith(".ts") || f.endsWith(".tsx"))
-      const mdFiles = files.filter((f: string) => f.endsWith(".md") || f.endsWith(".mdx"))
+  const filesEffect = restrictToFiles
+    ? Effect.succeed(restrictToFiles.filter(isSourceFile))
+    : listFilesRecursive(rootDir, [...ASTRO_SOURCE_EXTENSIONS])
 
+  return Stream.fromEffect(filesEffect).pipe(
+    Stream.flatMap((targetFiles) => {
       const allRules = Registry.getAllRules()
       const relevantRules = allRules.filter(rule => isRuleRelevant(rule, projectInfo))
 
-      const streams: Stream.Stream<Diagnostic, LintExecutionError>[] = []
+      const fileStreams: Stream.Stream<Diagnostic, LintExecutionError>[] = []
 
-      for (const filePath of astroFiles) {
-        for (const rule of relevantRules) {
-          streams.push(checkRuleOnFile(filePath, rule, projectInfo, ruleOverrides))
-        }
-      }
-      for (const filePath of tsFiles) {
-        for (const rule of relevantRules) {
-          if (rule.tags.includes("typescript") || rule.id.startsWith("routing/")) {
-            streams.push(checkRuleOnFile(filePath, rule, projectInfo, ruleOverrides))
-          }
-        }
-      }
-      for (const filePath of mdFiles) {
-        for (const rule of relevantRules) {
-          if (rule.tags.includes("content") || rule.tags.includes("markdown")) {
-            streams.push(checkRuleOnFile(filePath, rule, projectInfo, ruleOverrides))
-          }
+      for (const filePath of targetFiles) {
+        const rulesForFile = relevantRules.filter(rule => ruleAppliesToFile(rule, filePath))
+        if (rulesForFile.length > 0) {
+          fileStreams.push(lintFile(filePath, rulesForFile, projectInfo, ruleOverrides))
         }
       }
 
-      return Stream.mergeAll(streams, { concurrency: 10 })
+      return Stream.mergeAll(fileStreams, { concurrency: 10 })
     }),
   )
+}
+
+function isSourceFile(filePath: string): boolean {
+  return ASTRO_SOURCE_EXTENSIONS.some(ext => filePath.endsWith(ext))
+}
+
+function ruleAppliesToFile(rule: Rule, filePath: string): boolean {
+  if (filePath.endsWith(".astro")) return true
+  if (filePath.endsWith(".ts") || filePath.endsWith(".tsx")) {
+    return rule.tags.includes("typescript") || rule.id.startsWith("routing/")
+  }
+  if (filePath.endsWith(".md") || filePath.endsWith(".mdx")) {
+    return rule.tags.includes("content") || rule.tags.includes("markdown")
+  }
+  return false
 }
 
 function isRuleRelevant(rule: Rule, projectInfo: ProjectInfo): boolean {
@@ -57,9 +60,9 @@ function isRuleRelevant(rule: Rule, projectInfo: ProjectInfo): boolean {
   return true
 }
 
-function checkRuleOnFile(
+function lintFile(
   filePath: string,
-  rule: Rule,
+  rules: Rule[],
   projectInfo: ProjectInfo,
   ruleOverrides?: Record<string, "off" | "warn" | "error">,
 ): Stream.Stream<Diagnostic, LintExecutionError> {
@@ -68,33 +71,39 @@ function checkRuleOnFile(
       try: async () => {
         const content = await NodeFs.readFile(filePath, "utf-8")
         const diagnostics: Diagnostic[] = []
-        const context: RuleContext = {
-          filePath,
-          content,
-          projectInfo,
-          report: (diag) => {
-            const severity = ruleOverrides?.[rule.id] ?? rule.severity
-            diagnostics.push({
-              ruleId: rule.id,
-              severity: severity === "off" ? "info" : severity,
-              message: diag.message,
-              filePath: diag.filePath,
-              line: diag.line,
-              column: diag.column,
-              endLine: diag.endLine,
-              endColumn: diag.endColumn,
-              category: rule.category,
-              tags: rule.tags,
-              fix: diag.fix,
-              docs: diag.docs,
-            })
-          },
+
+        for (const rule of rules) {
+          const severity = ruleOverrides?.[rule.id] ?? rule.severity
+          if (severity === "off") continue
+
+          const context: RuleContext = {
+            filePath,
+            content,
+            projectInfo,
+            report: (diag) => {
+              diagnostics.push({
+                ruleId: rule.id,
+                severity,
+                message: diag.message,
+                filePath: diag.filePath,
+                line: diag.line,
+                column: diag.column,
+                endLine: diag.endLine,
+                endColumn: diag.endColumn,
+                category: rule.category,
+                tags: rule.tags,
+                fix: diag.fix,
+                docs: diag.docs,
+              })
+            },
+          }
+          rule.check(context)
         }
-        rule.check(context)
+
         return diagnostics
       },
       catch: (error) =>
-        new LintExecutionError(filePath, `Rule ${rule.id} threw: ${String(error)}`),
+        new LintExecutionError(filePath, `Lint failed: ${String(error)}`),
     }),
   ).pipe(
     Stream.flatMap((diags) => Stream.fromIterable(diags)),

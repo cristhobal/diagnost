@@ -12,13 +12,9 @@ export function discoverProject(rootDir: string): Effect.Effect<ProjectInfo, Pro
       return yield* Effect.fail(new ProjectDiscoveryError(rootDir, "No package.json found"))
     }
 
-    const packageJsonContent = yield* Effect.promise(async () => {
-      try {
-        return await Effect.runPromise(readFile(NodePath.join(rootDir, "package.json")))
-      } catch {
-        return "{}"
-      }
-    })
+    const packageJsonContent = yield* readFile(NodePath.join(rootDir, "package.json")).pipe(
+      Effect.orElseSucceed(() => "{}"),
+    )
 
     let packageJson: Record<string, unknown>
     try {
@@ -40,13 +36,14 @@ export function discoverProject(rootDir: string): Effect.Effect<ProjectInfo, Pro
     const hasSrcDir = yield* isDirectory(srcDir)
     const scanDir = hasSrcDir ? srcDir : rootDir
     const sourceFiles = yield* listFilesRecursive(scanDir, [...Constants.ASTRO_SOURCE_EXTENSIONS])
+    const hasContentCollections = yield* detectContentCollections(rootDir)
 
     return {
       rootDir,
       astroVersion: deps.astro || "unknown",
       output: detectOutput(integrations),
       integrations,
-      contentCollections: deps["astro/content"] !== undefined || deps["@astrojs/mdx"] !== undefined,
+      contentCollections: hasContentCollections,
       i18nEnabled: deps["@astrojs/sitemap"] !== undefined || deps["astro-i18n"] !== undefined,
       viewTransitions: true,
       sourceFileCount: sourceFiles.length,
@@ -77,6 +74,21 @@ function detectOutput(integrations: string[]): "static" | "server" | "hybrid" {
     i.startsWith("@astrojs/deno"),
   )
   return hasAdapter ? "server" : "static"
+}
+
+function detectContentCollections(rootDir: string): Effect.Effect<boolean> {
+  return Effect.gen(function* () {
+    const candidates = [
+      NodePath.join(rootDir, "src", "content", "config.ts"),
+      NodePath.join(rootDir, "src", "content", "config.js"),
+      NodePath.join(rootDir, "src", "content.config.ts"),
+      NodePath.join(rootDir, "src", "content.config.js"),
+    ]
+    for (const candidate of candidates) {
+      if (yield* fileExists(candidate)) return true
+    }
+    return false
+  })
 }
 
 function findAstroConfig(rootDir: string): Effect.Effect<boolean> {

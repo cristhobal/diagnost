@@ -73,6 +73,41 @@ describe("buildDiagnosticPipeline", () => {
     }
     expect(pipeline.apply(diagnostic, "cli")).toBeNull()
   })
+
+  it("ignores files matching a glob pattern anywhere in the tree", () => {
+    const pipeline = buildDiagnosticPipeline({
+      ignore: ["**/*.test.astro"],
+    })
+    const make = (filePath: string): Diagnostic => ({
+      ruleId: "test/rule",
+      severity: "warn",
+      message: "test",
+      filePath,
+      line: 1,
+      column: 1,
+      category: "test",
+      tags: [],
+    })
+    expect(pipeline.apply(make("/project/src/foo.test.astro"), "cli")).toBeNull()
+    expect(pipeline.apply(make("/project/src/foo.astro"), "cli")).not.toBeNull()
+  })
+
+  it("matches a bare glob pattern at any depth", () => {
+    const pipeline = buildDiagnosticPipeline({
+      ignore: ["*.spec.astro"],
+    })
+    const diagnostic: Diagnostic = {
+      ruleId: "test/rule",
+      severity: "warn",
+      message: "test",
+      filePath: "/project/src/pages/home.spec.astro",
+      line: 1,
+      column: 1,
+      category: "test",
+      tags: [],
+    }
+    expect(pipeline.apply(diagnostic, "cli")).toBeNull()
+  })
 })
 
 describe("rule registry", () => {
