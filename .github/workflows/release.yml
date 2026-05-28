@@ -1,0 +1,81 @@
+name: Release
+
+# Publishes a package to npm with build provenance (Sigstore-signed,
+# linked to this repo + commit + workflow run).
+#
+# Auth uses npm Trusted Publishing (OIDC) — no NPM_TOKEN secret required.
+# You must register this repo + workflow as a Trusted Publisher for each
+# package on npmjs.com (Package → Settings → Trusted Publisher) once.
+#
+# Triggers:
+#   - pushing a tag like `diagnost@0.2.18` publishes the `diagnost` package
+#   - manual run (workflow_dispatch) with the package name as input
+
+on:
+  push:
+    tags:
+      - "*@*"
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "Package name to publish (e.g. diagnost, diagnost-core, eslint-plugin-diagnost)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write # required for OIDC trusted publishing + provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: "https://registry.npmjs.org"
+          cache: pnpm
+
+      - name: Use latest npm (trusted publishing needs npm >= 11.5.1)
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Resolve target package
+        id: pkg
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            NAME="${{ inputs.package }}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+            NAME="${TAG%@*}"
+          fi
+          DIR=$(node -e "
+            const fs = require('fs');
+            for (const d of fs.readdirSync('packages')) {
+              const p = 'packages/' + d + '/package.json';
+              if (fs.existsSync(p) && require(process.cwd() + '/' + p).name === '$NAME') {
+                console.log(d); process.exit(0);
+              }
+            }
+            console.error('No package named ' + '$NAME'); process.exit(1);
+          ")
+          echo "dir=packages/$DIR" >> "$GITHUB_OUTPUT"
+          echo "Publishing '$NAME' from packages/$DIR"
+
+      - name: Publish with provenance
+        run: npm publish --provenance --access public
+        working-directory: ${{ steps.pkg.outputs.dir }}

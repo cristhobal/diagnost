@@ -2,6 +2,17 @@
   "name": "diagnost-core",
   "version": "0.2.0",
   "type": "module",
+  "description": "Core diagnostic engine for Astro projects: project discovery, lint rules, filter pipeline, and score calculation.",
+  "keywords": ["astro", "lint", "diagnostics", "engine"],
+  "homepage": "https://usediagnost.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristhobal/diagnost.git",
+    "directory": "packages/core"
+  },
+  "bugs": "https://github.com/cristhobal/diagnost/issues",
+  "license": "MIT",
+  "author": "cristhobal",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {

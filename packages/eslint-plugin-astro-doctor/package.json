@@ -2,6 +2,17 @@
   "name": "eslint-plugin-diagnost",
   "version": "0.1.2",
   "type": "module",
+  "description": "ESLint plugin exposing diagnost's Astro lint rules for IDE and CI integration.",
+  "keywords": ["astro", "eslint", "eslint-plugin", "lint", "diagnostics"],
+  "homepage": "https://usediagnost.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristhobal/diagnost.git",
+    "directory": "packages/eslint-plugin-astro-doctor"
+  },
+  "bugs": "https://github.com/cristhobal/diagnost/issues",
+  "license": "MIT",
+  "author": "cristhobal",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

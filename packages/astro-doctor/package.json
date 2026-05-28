@@ -2,6 +2,17 @@
   "name": "diagnost",
   "version": "0.2.18",
   "type": "module",
+  "description": "Diagnostic and linting toolkit for Astro projects — scan your codebase, run 20+ rules across 11 categories, and get a health score.",
+  "keywords": ["astro", "lint", "linter", "diagnostics", "seo", "accessibility", "performance", "cli"],
+  "homepage": "https://usediagnost.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristhobal/diagnost.git",
+    "directory": "packages/astro-doctor"
+  },
+  "bugs": "https://github.com/cristhobal/diagnost/issues",
+  "license": "MIT",
+  "author": "cristhobal",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
