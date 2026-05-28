@@ -3,8 +3,8 @@
 <br />
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/diagnost-Astro%20Diagnostic%20Tool-ff5a03?style=for-the-badge&logo=astro&logoColor=white&labelColor=1e1e1e">
-  <img alt="diagnost" src="https://img.shields.io/badge/diagnost-Astro%20Diagnostic%20Tool-ff5a03?style=for-the-badge&logo=astro&logoColor=white&labelColor=1e1e1e">
+  <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/diagnost-Astro%20Diagnostic%20Tool-FAFAFA?style=for-the-badge&logo=astro&logoColor=080808&labelColor=FAFAFA">
+  <img alt="diagnost" src="https://img.shields.io/badge/diagnost-Astro%20Diagnostic%20Tool-080808?style=for-the-badge&logo=astro&logoColor=FAFAFA&labelColor=080808">
 </picture>
 
 <br />
@@ -15,11 +15,11 @@ Scan your codebase, enforce best practices, and track your project's health — 
 
 <br />
 
-[![npm](https://img.shields.io/npm/v/diagnost?color=ff5a03&label=diagnost&style=flat-square)](https://www.npmjs.com/package/diagnost)
-[![npm](https://img.shields.io/npm/v/diagnost-core?color=ff5a03&label=diagnost-core&style=flat-square)](https://www.npmjs.com/package/diagnost-core)
-[![npm](https://img.shields.io/npm/v/eslint-plugin-diagnost?color=ff5a03&label=eslint-plugin-diagnost&style=flat-square)](https://www.npmjs.com/package/eslint-plugin-diagnost)
-[![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)](LICENSE)
-[![Node.js >= 18](https://img.shields.io/badge/node-%3E%3D18-blue?style=flat-square&logo=node.js)](https://nodejs.org)
+[![npm](https://img.shields.io/npm/v/diagnost?color=080808&labelColor=080808&label=diagnost&style=flat-square&logoColor=FAFAFA)](https://www.npmjs.com/package/diagnost)
+[![npm](https://img.shields.io/npm/v/diagnost-core?color=080808&labelColor=080808&label=diagnost-core&style=flat-square&logoColor=FAFAFA)](https://www.npmjs.com/package/diagnost-core)
+[![npm](https://img.shields.io/npm/v/eslint-plugin-diagnost?color=080808&labelColor=080808&label=eslint-plugin-diagnost&style=flat-square&logoColor=FAFAFA)](https://www.npmjs.com/package/eslint-plugin-diagnost)
+[![License: MIT](https://img.shields.io/badge/license-MIT-080808?style=flat-square&labelColor=080808&color=080808)](LICENSE)
+[![Node.js >= 18](https://img.shields.io/badge/node-%3E%3D18-080808?style=flat-square&labelColor=080808&logo=node.js&logoColor=FAFAFA)](https://nodejs.org)
 
 <br />
 
@@ -57,9 +57,9 @@ $ diagnost .
 
 | Package | Version | Description |
 |---|---|---|
-| [`diagnost`](https://www.npmjs.com/package/diagnost) | [![npm](https://img.shields.io/npm/v/diagnost?style=flat-square&color=ff5a03)](https://www.npmjs.com/package/diagnost) | CLI to scan Astro projects from the terminal |
-| [`diagnost-core`](https://www.npmjs.com/package/diagnost-core) | [![npm](https://img.shields.io/npm/v/diagnost-core?style=flat-square&color=ff5a03)](https://www.npmjs.com/package/diagnost-core) | Diagnostic engine: project discovery, lint rules, filter pipeline, and score calculation |
-| [`eslint-plugin-diagnost`](https://www.npmjs.com/package/eslint-plugin-diagnost) | [![npm](https://img.shields.io/npm/v/eslint-plugin-diagnost?style=flat-square&color=ff5a03)](https://www.npmjs.com/package/eslint-plugin-diagnost) | ESLint plugin exposing rules as ESLint rules for IDE integration |
+| [`diagnost`](https://www.npmjs.com/package/diagnost) | [![npm](https://img.shields.io/npm/v/diagnost?style=flat-square&color=080808&labelColor=080808&logoColor=FAFAFA)](https://www.npmjs.com/package/diagnost) | CLI to scan Astro projects from the terminal |
+| [`diagnost-core`](https://www.npmjs.com/package/diagnost-core) | [![npm](https://img.shields.io/npm/v/diagnost-core?style=flat-square&color=080808&labelColor=080808&logoColor=FAFAFA)](https://www.npmjs.com/package/diagnost-core) | Diagnostic engine: project discovery, lint rules, filter pipeline, and score calculation |
+| [`eslint-plugin-diagnost`](https://www.npmjs.com/package/eslint-plugin-diagnost) | [![npm](https://img.shields.io/npm/v/eslint-plugin-diagnost?style=flat-square&color=080808&labelColor=080808&logoColor=FAFAFA)](https://www.npmjs.com/package/eslint-plugin-diagnost) | ESLint plugin exposing rules as ESLint rules for IDE integration |
 
 ---
 
