@@ -3,6 +3,16 @@
   <img alt="diagnost" src="https://img.shields.io/badge/diagnost-Astro%20Diagnostic%20Tool-ff5a03?style=for-the-badge&logo=astro&logoColor=white&labelColor=1e1e1e">
 </picture>
 
+<p align="center">
+  <a href="https://usediagnost.vercel.app/">
+    <img alt="Visit the official website" src="https://img.shields.io/badge/Official%20Website-usediagnost.vercel.app-ff5a03?style=for-the-badge&logo=vercel&logoColor=white&labelColor=1e1e1e">
+  </a>
+</p>
+
+<p align="center">
+  <strong>🌐 Visit the <a href="https://usediagnost.vercel.app/">official website</a> for the full documentation, live demo, and a better visual overview.</strong>
+</p>
+
 ---
 
 A diagnostic and linting toolkit for [Astro](https://astro.build) projects. Scan your codebase, run 20+ rules across 11 categories, and get a health score.

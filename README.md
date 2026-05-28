@@ -7,6 +7,12 @@
 
 [English](README.md) · [中文](docs/zh.md) · [हिन्दी](docs/hi.md) · [Español](docs/es.md) · [Français](docs/fr.md)
 
+<a href="https://usediagnost.vercel.app/">
+  <img alt="Visit the official website" src="https://img.shields.io/badge/Official%20Website-usediagnost.vercel.app-ff5a03?style=for-the-badge&logo=vercel&logoColor=white&labelColor=1e1e1e">
+</a>
+
+**🌐 Visit the [official website](https://usediagnost.vercel.app/) for the full documentation, live demo, and a better visual overview.**
+
 ---
 
 </div>
