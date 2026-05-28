@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/diagnost-Astro%20Diagnostic%20Tool-ff5a03?style=for-the-badge&logo=astro&logoColor=white&labelColor=1e1e1e">
-    <img alt="diagnost" src="https://img.shields.io/badge/diagnost-Astro%20Diagnostic%20Tool-ff5a03?style=for-the-badge&logo=astro&logoColor=white&labelColor=1e1e1e">
+    <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/diagnost-Astro%20Diagnostic%20Tool-FAFAFA?style=for-the-badge&logo=astro&logoColor=080808&labelColor=FAFAFA">
+    <img alt="diagnost" src="https://img.shields.io/badge/diagnost-Astro%20Diagnostic%20Tool-080808?style=for-the-badge&logo=astro&logoColor=white&labelColor=080808">
   </picture>
 </p>
 
@@ -13,11 +13,11 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/diagnost"><img alt="npm version" src="https://img.shields.io/npm/v/diagnost?style=flat-square&logo=npm&logoColor=white&label=npm&color=ff5a03&labelColor=1e1e1e"></a>
-  <a href="https://www.npmjs.com/package/diagnost"><img alt="downloads" src="https://img.shields.io/npm/dm/diagnost?style=flat-square&label=downloads&color=ff5a03&labelColor=1e1e1e"></a>
-  <a href="https://github.com/cristhobal/diagnost/actions/workflows/release.yml"><img alt="build" src="https://img.shields.io/github/actions/workflow/status/cristhobal/diagnost/release.yml?style=flat-square&label=build&labelColor=1e1e1e"></a>
-  <a href="https://www.npmjs.com/package/diagnost"><img alt="provenance signed" src="https://img.shields.io/badge/provenance-signed-2da44e?style=flat-square&logo=npm&logoColor=white&labelColor=1e1e1e"></a>
-  <a href="https://github.com/cristhobal/diagnost"><img alt="license" src="https://img.shields.io/npm/l/diagnost?style=flat-square&label=license&color=ff5a03&labelColor=1e1e1e"></a>
+  <a href="https://www.npmjs.com/package/diagnost"><img alt="npm version" src="https://img.shields.io/npm/v/diagnost?style=flat-square&logo=npm&logoColor=white&label=npm&color=080808&labelColor=080808"></a>
+  <a href="https://www.npmjs.com/package/diagnost"><img alt="downloads" src="https://img.shields.io/npm/dm/diagnost?style=flat-square&label=downloads&color=080808&labelColor=080808"></a>
+  <a href="https://github.com/cristhobal/diagnost/actions/workflows/release.yml"><img alt="build" src="https://img.shields.io/github/actions/workflow/status/cristhobal/diagnost/release.yml?style=flat-square&label=build&labelColor=080808"></a>
+  <a href="https://www.npmjs.com/package/diagnost"><img alt="provenance signed" src="https://img.shields.io/badge/provenance-signed-080808?style=flat-square&logo=npm&logoColor=white&labelColor=080808"></a>
+  <a href="https://github.com/cristhobal/diagnost"><img alt="license" src="https://img.shields.io/npm/l/diagnost?style=flat-square&label=license&color=080808&labelColor=080808"></a>
 </p>
 
 <p align="center">
