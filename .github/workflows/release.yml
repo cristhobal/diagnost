@@ -77,3 +77,16 @@ jobs:
       - name: Publish with provenance
         run: npm publish --provenance --access public
         working-directory: ${{ steps.pkg.outputs.dir }}
+
+      # Rebuild the marketing site so its version badge reflects the release
+      # immediately (the landing bakes the version at build time). No-op if the
+      # LANDING_DEPLOY_HOOK secret isn't configured.
+      - name: Trigger landing redeploy
+        env:
+          HOOK: ${{ secrets.LANDING_DEPLOY_HOOK }}
+        run: |
+          if [ -n "$HOOK" ]; then
+            curl -fsS -X POST "$HOOK" > /dev/null && echo "Landing redeploy triggered"
+          else
+            echo "LANDING_DEPLOY_HOOK not set — skipping landing redeploy"
+          fi
