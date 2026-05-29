@@ -1,6 +1,6 @@
 # MIT 许可证
 
-> 非官方翻译，仅供参考。具有法律约束力的版本为英文原版：[LICENSE.md](LICENSE.md)。
+> 非官方翻译，仅供参考。具有法律约束力的版本为英文原版：[LICENSE.md](../LICENSE.md)。
 
 版权所有 (c) 2026 Cristhobal Canales
 

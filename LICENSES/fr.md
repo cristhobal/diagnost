@@ -1,6 +1,6 @@
 # Licence MIT
 
-> Traduction non officielle fournie à titre informatif uniquement. La version juridiquement contraignante est l'originale en anglais : [LICENSE.md](LICENSE.md).
+> Traduction non officielle fournie à titre informatif uniquement. La version juridiquement contraignante est l'originale en anglais : [LICENSE.md](../LICENSE.md).
 
 Copyright (c) 2026 Cristhobal Canales
 
