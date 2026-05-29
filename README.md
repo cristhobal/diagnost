@@ -225,6 +225,7 @@ pnpm clean
 
 - 🔗 GitHub: [millionco/react-doctor](https://github.com/millionco/react-doctor)
 - 🌐 Website: [react.doctor](https://www.react.doctor/)
+- 📦 npm: [react-doctor](https://www.npmjs.com/package/react-doctor)
 
 ## License
 
