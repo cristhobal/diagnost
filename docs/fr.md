@@ -165,4 +165,4 @@ pnpm clean
 
 ## Licence
 
-MIT
+[MIT](../LICENSE.fr.md) © Cristhobal Canales

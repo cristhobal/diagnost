@@ -165,4 +165,4 @@ pnpm clean
 
 ## 许可证
 
-MIT
+[MIT](../LICENSE.zh.md) © Cristhobal Canales
