@@ -19,3 +19,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Disclaimer: The license text above is provided by GitHub as a starting point to help
+you make an informed decision. It is distributed "as-is" without any warranty and
+GitHub disclaims liability for any damages resulting from the use of this license
+information. If you have questions about the correct license for your code or any
+other legal issues, consult a professional.

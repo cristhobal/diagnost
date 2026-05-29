@@ -9,3 +9,7 @@ Par la présente, une autorisation est accordée, gratuitement, à toute personn
 L'avis de droit d'auteur ci-dessus et le présent avis d'autorisation doivent être inclus dans toutes les copies ou parties substantielles du Logiciel.
 
 LE LOGICIEL EST FOURNI « EN L'ÉTAT », SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU IMPLICITE, Y COMPRIS MAIS SANS S'Y LIMITER LES GARANTIES DE QUALITÉ MARCHANDE, D'ADÉQUATION À UN USAGE PARTICULIER ET D'ABSENCE DE CONTREFAÇON. EN AUCUN CAS LES AUTEURS OU LES TITULAIRES DU DROIT D'AUTEUR NE POURRONT ÊTRE TENUS RESPONSABLES DE TOUTE RÉCLAMATION, DE TOUT DOMMAGE OU DE TOUTE AUTRE RESPONSABILITÉ, QUE CE SOIT DANS LE CADRE D'UN CONTRAT, D'UN DÉLIT OU AUTREMENT, DÉCOULANT DE OU EN LIEN AVEC LE LOGICIEL OU SON UTILISATION OU D'AUTRES OPÉRATIONS SUR LE LOGICIEL.
+
+---
+
+Clause de non-responsabilité : Le texte de licence ci-dessus est fourni par GitHub comme point de départ pour vous aider à prendre une décision éclairée. Il est distribué « en l'état » sans aucune garantie et GitHub décline toute responsabilité pour tout dommage résultant de l'utilisation des informations de licence. Si vous avez des questions concernant la licence appropriée pour votre code ou tout autre problème juridique, consultez un professionnel.

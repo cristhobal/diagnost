@@ -9,3 +9,7 @@ Por la presente se concede permiso, de forma gratuita, a cualquier persona que o
 El aviso de copyright anterior y este aviso de permiso se incluirán en todas las copias o partes sustanciales del Software.
 
 EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA, INCLUYENDO PERO NO LIMITÁNDOSE A LAS GARANTÍAS DE COMERCIABILIDAD, IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O TITULARES DEL COPYRIGHT SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑO U OTRA RESPONSABILIDAD, YA SEA EN UNA ACCIÓN DE CONTRATO, AGRAVIO O DE OTRO MODO, QUE SURJA DE O EN CONEXIÓN CON EL SOFTWARE O EL USO U OTRO TIPO DE ACCIONES EN EL SOFTWARE.
+
+---
+
+Aviso de exención de responsabilidad: El texto de licencia anterior es proporcionado por GitHub como punto de partida para ayudarle a tomar una decisión informada. Se distribuye « tal cual » sin ninguna garantía y GitHub declina toda responsabilidad por cualquier daño resultante del uso de la información de licencia. Si tiene preguntas sobre la licencia correcta para su código o cualquier otro problema legal, consulte a un profesional.
