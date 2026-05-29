@@ -219,6 +219,13 @@ pnpm clean
 
 ---
 
+## Acknowledgements
+
+**diagnost** is inspired by and based on [**react-doctor**](https://github.com/millionco/react-doctor) by [millionco](https://github.com/millionco) — a diagnostic and linting toolkit for React projects with a similar philosophy: scan your codebase, enforce best practices, and get a 0–100 health score.
+
+- 🔗 GitHub: [millionco/react-doctor](https://github.com/millionco/react-doctor)
+- 🌐 Website: [react.doctor](https://www.react.doctor/)
+
 ## License
 
 [MIT](LICENSE) © diagnost contributors
