@@ -43,7 +43,7 @@ export async function inspectAction(
   } else {
     const verbose = options.verbose || false
     renderCLI(diagnostics, result, { verbose })
-    renderSummary(diagnostics, result)
+    await renderSummary(diagnostics, result)
   }
 
   if (options.fix && !options.json && !options.jsonCompact) {

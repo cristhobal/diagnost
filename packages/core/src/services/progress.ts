@@ -1,4 +1,4 @@
-import * as Console from "effect/Console"
+import { createSpinner, sleep } from "../utils/console-animations.js"
 
 export interface ProgressHandle {
   start: (message: string) => void
@@ -8,11 +8,13 @@ export interface ProgressHandle {
 }
 
 export function createConsoleProgress(): ProgressHandle {
+  const spinner = createSpinner()
+
   return {
-    start: (message: string) => Console.log(`→ ${message}`),
-    update: (message: string) => Console.log(`  ${message}`),
-    succeed: (message: string) => Console.log(`✓ ${message}`),
-    fail: (message: string) => Console.log(`✗ ${message}`),
+    start: (message: string) => spinner.start(message),
+    update: (message: string) => spinner.update(message),
+    succeed: (message: string) => spinner.succeed(message),
+    fail: (message: string) => spinner.fail(message),
   }
 }
 

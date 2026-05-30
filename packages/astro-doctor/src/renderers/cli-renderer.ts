@@ -1,13 +1,11 @@
 import type { Diagnostic, InspectResult } from "diagnost-core"
+import { pulse, glow, shake, RESET, DIM, BOLD, RED, GREEN, YELLOW, CYAN, GRAY } from "../utils/console-animations.js"
 
-const RESET = "\x1b[0m"
-const DIM = "\x1b[2m"
-const BOLD = "\x1b[1m"
-const RED = "\x1b[31m"
-const GREEN = "\x1b[32m"
-const YELLOW = "\x1b[33m"
-const CYAN = "\x1b[36m"
-const GRAY = "\x1b[90m"
+function getEyes(severity: string): string {
+  if (severity === "error") return `${RED}${BOLD}✗${RESET}`
+  if (severity === "warn") return `${YELLOW}${BOLD}⚠${RESET}`
+  return `${CYAN}${BOLD}ℹ${RESET}`
+}
 
 export function renderCLI(
   diagnostics: Diagnostic[],
@@ -15,7 +13,7 @@ export function renderCLI(
   options?: { verbose?: boolean },
 ): void {
   if (diagnostics.length === 0) {
-    console.log(`\n  ${GREEN}${BOLD}No issues found${RESET}`)
+    console.log(`\n  ${glow("✓", GREEN)} ${BOLD}No issues found${RESET}`)
     return
   }
 
@@ -36,8 +34,8 @@ function renderCompact(diagnostics: Diagnostic[], result: InspectResult): void {
     const errorCount = diags.filter(d => d.severity === "error").length
     const warnCount = diags.filter(d => d.severity === "warn").length
     const parts: string[] = []
-    if (errorCount > 0) parts.push(`${RED}${errorCount} ${errorCount === 1 ? "error" : "errors"}${RESET}`)
-    if (warnCount > 0) parts.push(`${YELLOW}${warnCount} ${warnCount === 1 ? "warning" : "warnings"}${RESET}`)
+    if (errorCount > 0) parts.push(`${pulse(`${errorCount} ${errorCount === 1 ? "error" : "errors"}`, RED)}`)
+    if (warnCount > 0) parts.push(`${pulse(`${warnCount} ${warnCount === 1 ? "warning" : "warnings"}`, YELLOW)}`)
     console.log(`  ${BOLD}${category}${RESET} ${GRAY}›${RESET} ${parts.join(GRAY + ", " + RESET)}`)
   }
 }
@@ -53,11 +51,12 @@ function renderVerbose(diagnostics: Diagnostic[], result: InspectResult): void {
   for (const [ruleId, diags] of sorted) {
     const first = diags[0]
     const count = diags.length
-    const symbol = first.severity === "error" ? "✗" : "⚠"
-    const color = first.severity === "error" ? RED : YELLOW
+    const severity = first.severity
+    const symbol = severity === "error" ? "✗" : "⚠"
+    const color = severity === "error" ? RED : YELLOW
     const badge = count > 1 ? ` ${GRAY}×${count}${RESET}` : ""
 
-    console.log(`  ${color}${symbol}${RESET} ${color}${ruleId}${RESET}${badge}`)
+    console.log(`  ${glow(symbol, color)} ${color}${BOLD}${ruleId}${RESET}${badge}`)
     console.log(`       ${first.message}`)
 
     if (first.fix) {

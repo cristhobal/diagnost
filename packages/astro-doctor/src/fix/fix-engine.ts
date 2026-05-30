@@ -2,14 +2,7 @@ import type { Diagnostic } from "diagnost-core"
 import { readFileSync, writeFileSync } from "node:fs"
 import { resolve } from "node:path"
 import { getFixer, getFixableRules } from "./fixers.js"
-
-const RESET = "\x1b[0m"
-const BOLD = "\x1b[1m"
-const GREEN = "\x1b[32m"
-const RED = "\x1b[31m"
-const YELLOW = "\x1b[33m"
-const DIM = "\x1b[2m"
-const GRAY = "\x1b[90m"
+import { pulse, glow, RESET, DIM, BOLD, GREEN, RED, YELLOW } from "../utils/console-animations.js"
 
 function groupByMessage(diags: Diagnostic[]): [string, Diagnostic[]][] {
   const map = new Map<string, Diagnostic[]>()
@@ -37,12 +30,12 @@ export async function runFixEngine(
   const totalWarns = diagnostics.filter(d => d.severity === "warn").length
   const uniqueFiles = new Set(diagnostics.map(d => d.filePath)).size
   let parts = ""
-  if (totalErrors > 0) parts += `${RED}${totalErrors} ${totalErrors === 1 ? "error" : "errors"}${RESET}`
+  if (totalErrors > 0) parts += `${pulse(`${totalErrors} ${totalErrors === 1 ? "error" : "errors"}`, RED)}`
   if (totalWarns > 0) {
     if (parts) parts += ", "
-    parts += `${YELLOW}${totalWarns} ${totalWarns === 1 ? "warning" : "warnings"}${RESET}`
+    parts += `${pulse(`${totalWarns} ${totalWarns === 1 ? "warning" : "warnings"}`, YELLOW)}`
   }
-  if (!parts) parts = `${GREEN}no issues${RESET}`
+  if (!parts) parts = `${glow("no issues", GREEN)}`
   console.log(`\n  ${parts} across ${BOLD}${uniqueFiles} files${RESET}`)
 
   const groups = groupByMessage(fixable)
@@ -50,7 +43,7 @@ export async function runFixEngine(
   console.log(`\n  ${YELLOW}•${RESET} Fixing issues with coding agent...`)
 
   for (const [, diags] of groups) {
-    console.log(`  • ${diags[0].message.replace(/\s*\.\s*$/, "")} (${diags.length})`)
+    console.log(`  ${YELLOW}›${RESET} ${diags[0].message.replace(/\s*\.\s*$/, "")} ${DIM}(${diags.length})${RESET}`)
   }
 
   process.stdout.write(`\n  ${BOLD}Do you want to fix these issues?${RESET} ${DIM}(Y/n)${RESET} `)
@@ -105,7 +98,7 @@ export async function runFixEngine(
 
     if (groupFixed > 0) {
       fixed += groupFixed
-      console.log(`  ${GREEN}✓${RESET} ${diags[0].message.replace(/\s*\.\s*$/, "")} (${groupFixed})`)
+      console.log(`  ${glow("✓", GREEN)} ${diags[0].message.replace(/\s*\.\s*$/, "")} ${DIM}(${groupFixed})${RESET}`)
     } else {
       skipped += diags.length
     }
@@ -120,7 +113,7 @@ export async function runFixEngine(
   }
 
   if (fixed > 0) {
-    console.log(`\n  ${GREEN}✓${RESET} ${BOLD}${fixed} ${fixed === 1 ? "issue" : "issues"} fixed${RESET} ${DIM}in ${writtenFiles.size} ${writtenFiles.size === 1 ? "file" : "files"}${RESET}`)
+    console.log(`\n  ${glow("✓", GREEN)} ${BOLD}${fixed} ${fixed === 1 ? "issue" : "issues"} fixed${RESET} ${DIM}in ${writtenFiles.size} ${writtenFiles.size === 1 ? "file" : "files"}${RESET}`)
   }
   if (skipped > 0) {
     console.log(`  ${DIM}${skipped} ${skipped === 1 ? "issue" : "issues"} skipped${RESET}`)

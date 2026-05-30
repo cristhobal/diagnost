@@ -1,6 +1,6 @@
 {
   "name": "diagnost",
-  "version": "0.2.22",
+  "version": "0.2.23",
   "type": "module",
   "description": "Diagnostic and linting toolkit for Astro projects — scan your codebase, run 20+ rules across 11 categories, and get a health score.",
   "keywords": ["astro", "lint", "linter", "diagnostics", "seo", "accessibility", "performance", "cli"],

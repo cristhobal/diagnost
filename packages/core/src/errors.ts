@@ -1,3 +1,5 @@
+import { shake, RESET, BOLD, RED, DIM, CYAN } from "../utils/console-animations.js"
+
 export class ProjectDiscoveryError extends Error {
   readonly _tag = "ProjectDiscoveryError" as const
   readonly rootDir: string
@@ -54,5 +56,20 @@ export function isAstroDoctorError(error: unknown): error is AstroDoctorError {
 }
 
 export function formatAstroDoctorError(error: AstroDoctorError): string {
-  return `[${error._tag}] ${error.message}`
+  const icon = error._tag === "ProjectDiscoveryError" ? "?" :
+               error._tag === "ConfigLoadError" ? "!" :
+               error._tag === "LintExecutionError" ? "✗" : "✗"
+  return `${shake(icon)} [${error._tag}] ${error.message}`
+}
+
+export function printError(error: AstroDoctorError): void {
+  console.error(`\n  ${shake("✗")} ${BOLD}${RED}${error.message}${RESET}\n`)
+  console.error(`  ${DIM}Type: ${error._tag}${RESET}`)
+  if ("rootDir" in error) {
+    console.error(`  ${DIM}Location: ${error.rootDir}${RESET}`)
+  }
+  if ("filePath" in error) {
+    console.error(`  ${DIM}File: ${error.filePath}${RESET}`)
+  }
+  console.error()
 }

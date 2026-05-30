@@ -1,14 +1,6 @@
 import type { Diagnostic, InspectResult } from "diagnost-core"
 import * as NodePath from "node:path"
-
-const RESET = "\x1b[0m"
-const BOLD = "\x1b[1m"
-const GREEN = "\x1b[32m"
-const YELLOW = "\x1b[33m"
-const RED = "\x1b[31m"
-const CYAN = "\x1b[36m"
-const DIM = "\x1b[2m"
-const GRAY = "\x1b[90m"
+import { sleep, glow, pulse, clearLine, RESET, DIM, BOLD, GREEN, YELLOW, RED, CYAN, GRAY } from "../utils/console-animations.js"
 
 const SCORE_GOOD = 75
 const SCORE_OK = 50
@@ -38,10 +30,10 @@ function renderScoreBar(score: number): string {
   return colorize(bar, score)
 }
 
-export function renderSummary(
+export async function renderSummary(
   diagnostics: Diagnostic[],
   result: InspectResult,
-): void {
+): Promise<void> {
   const errorCount = diagnostics.filter(d => d.severity === "error").length
   const warnCount = diagnostics.filter(d => d.severity === "warn").length
   const infoCount = diagnostics.filter(d => d.severity === "info").length
@@ -67,20 +59,41 @@ export function renderSummary(
       const face = faceLines[i] || ""
       const right = rightLines[i] || ""
       const padding = " ".repeat(Math.max(1, maxFaceWidth - visibleLength(face) + 2))
-      console.log(`  ${face}${padding}${right}`)
+      process.stdout.write(`  ${face}${padding}${right}\n`)
     }
+
+    await sleep(100)
+    await animateScoreBar(score, BAR_WIDTH)
   }
 
   const total = errorCount + warnCount + infoCount
   if (total > 0) {
     const color = errorCount > 0 ? RED : warnCount > 0 ? YELLOW : GRAY
-    console.log(`  ${color}${total} ${total === 1 ? "issue" : "issues"}${RESET}`)
+    const pulseColor = errorCount > 0 ? RED : warnCount > 0 ? YELLOW : CYAN
+    console.log(`  ${pulse(`${total} ${total === 1 ? "issue" : "issues"}`, pulseColor)}`)
   } else {
-    console.log(`  ${GREEN}No issues found${RESET}`)
+    console.log(`  ${glow("✓", GREEN)} ${BOLD}No issues found${RESET}`)
   }
 
   console.log(`  ${GRAY}Scanned: ${result.projectInfo.sourceFileCount} files in ${(result.duration / 1000).toFixed(1)}s${RESET}`)
   console.log()
+}
+
+async function animateScoreBar(score: number, width: number = 50): Promise<void> {
+  const steps = 15
+  const stepDelay = 40
+  const filled = Math.round((score / 100) * width)
+  const color = score >= SCORE_GOOD ? GREEN : score >= SCORE_OK ? YELLOW : RED
+
+  for (let i = 0; i <= steps; i++) {
+    const currentFilled = Math.round((i / steps) * filled)
+    const currentEmpty = width - currentFilled
+    const bar = "\u2588".repeat(currentFilled) + "\u2591".repeat(currentEmpty)
+    clearLine()
+    process.stdout.write(`  ${color}${bar}${RESET} ${BOLD}${Math.round((i / steps) * score)}${RESET}`)
+    await sleep(stepDelay)
+  }
+  process.stdout.write("\n")
 }
 
 function visibleLength(text: string): number {

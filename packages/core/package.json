@@ -1,6 +1,6 @@
 {
   "name": "diagnost-core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "type": "module",
   "description": "Core diagnostic engine for Astro projects: project discovery, lint rules, filter pipeline, and score calculation.",
   "keywords": ["astro", "lint", "diagnostics", "engine"],
