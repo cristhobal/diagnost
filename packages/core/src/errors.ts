@@ -1,4 +1,4 @@
-import { shake, RESET, BOLD, RED, DIM, CYAN } from "../utils/console-animations.js"
+import { shake, RESET, BOLD, RED, DIM, CYAN } from "./utils/console-animations.js"
 
 export class ProjectDiscoveryError extends Error {
   readonly _tag = "ProjectDiscoveryError" as const

@@ -23,6 +23,10 @@
     "./schemas": {
       "types": "./dist/schemas.d.ts",
       "import": "./dist/schemas.js"
+    },
+    "./utils/console-animations": {
+      "types": "./dist/utils/console-animations.d.ts",
+      "import": "./dist/utils/console-animations.js"
     }
   },
   "files": [
